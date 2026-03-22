@@ -182,6 +182,19 @@
             color: var(--color-text-secondary);
             border: 0.5px solid var(--color-border-tertiary);
         }
+        .tag-link {
+            display: inline-block;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: var(--border-radius-md);
+            background: rgba(187, 17, 29, 0.08);
+            color: var(--color-accent);
+            border: 0.5px solid rgba(187, 17, 29, 0.3);
+            text-decoration: none;
+        }
+        .tag-link:hover {
+            background: rgba(187, 17, 29, 0.15);
+        }
 
         /* Publications */
         .pub-item {
@@ -385,14 +398,15 @@
                 </div>
             </a>
 
-            <a class="project-card" href="https://github.com/MatthewCorney/Mariana" target="_blank" rel="noopener noreferrer">
+            <div class="project-card" onclick="window.open('https://github.com/MatthewCorney/Mariana','_blank')" style="cursor:pointer;">
                 <p class="project-name">Mariana (SonicAtlas)</p>
                 <p class="project-desc">Music recommendation website.</p>
                 <div class="tags">
                     <span class="tag">Music</span>
                     <span class="tag">Recommendation</span>
+                    <a class="tag-link" href="https://mariana-4gnj.vercel.app/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Site</a>
                 </div>
-            </a>
+            </div>
 
         </div>
     </section>
