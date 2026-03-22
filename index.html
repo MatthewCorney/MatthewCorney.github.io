@@ -1,7 +1,452 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matthew Corney - Computational Biologist</title>
+    <style>
+        :root {
+            --color-text-primary: #001724;
+            --color-text-secondary: #001724cc;
+            --color-text-tertiary: #001724aa;
+            --color-border-tertiary: rgba(0, 23, 36, 0.15);
+            --color-border-secondary: rgba(0, 23, 36, 0.2);
+            --color-background-secondary: rgba(0, 23, 36, 0.08);
+            --color-accent: #bb111d;
+            --color-accent-green: #1D9E75;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --border-radius-md: 6px;
+            --border-radius-lg: 10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--color-text-primary);
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Nav */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3.5rem;
+        }
+        .nav-name {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-link {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .nav-link:hover {
+            color: var(--color-text-primary);
+        }
+
+        /* Hero */
+        .label {
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-tertiary);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .hero-name {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        .hero-role {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+        }
+        .hero-bio {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            max-width: 560px;
+        }
+
+        /* Link chips */
+        .links-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .link-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            padding: 5px 12px;
+            border-radius: var(--border-radius-md);
+            border: 0.5px solid var(--color-border-secondary);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: border-color 0.15s, color 0.15s;
+        }
+        .link-chip:hover {
+            border-color: var(--color-text-primary);
+            color: var(--color-text-primary);
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--color-accent-green);
+            display: inline-block;
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 0.5px solid var(--color-border-tertiary);
+            margin: 2rem 0;
+        }
+
+        /* Section title */
+        .section-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Project grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        @media (min-width: 520px) {
+            .project-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .project-card {
+            display: block;
+            border: 0.5px solid var(--color-border-tertiary);
+            border-radius: var(--border-radius-lg);
+            padding: 1rem;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .project-card:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 1px 4px rgba(0, 23, 36, 0.06);
+        }
+        .project-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .project-desc {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: var(--border-radius-md);
+            background: var(--color-background-secondary);
+            color: var(--color-text-secondary);
+            border: 0.5px solid var(--color-border-tertiary);
+        }
+
+        /* Publications */
+        .pub-item {
+            padding: 0.85rem 0;
+            border-bottom: 0.5px solid var(--color-border-tertiary);
+        }
+        .pub-item:last-child {
+            border-bottom: none;
+        }
+        .pub-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        .pub-meta {
+            font-size: 12px;
+            color: var(--color-text-tertiary);
+        }
+        .pub-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .pub-title a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Contact */
+        .contact-text {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+        }
+        .contact-email {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .contact-email a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+        }
+        .contact-email a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 1rem;
+            padding-top: 1.5rem;
+            border-top: 0.5px solid var(--color-border-tertiary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--color-text-tertiary);
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.25rem;
+        }
+        .footer-links a {
+            color: var(--color-text-tertiary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-links a:hover {
+            color: var(--color-text-primary);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 519px) {
+            .nav {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: flex-start;
+                margin-bottom: 2.5rem;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm, hosted with GitHub Pages.</p>
+
+<div class="page">
+
+    <!-- Nav -->
+    <nav class="nav">
+        <span class="nav-name">Matthew Corney</span>
+        <div class="nav-links">
+            <a class="nav-link" href="#about">About</a>
+            <a class="nav-link" href="#projects">Projects</a>
+            <a class="nav-link" href="#publications">Publications</a>
+            <a class="nav-link" href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="about" style="margin-bottom: 3rem;">
+        <p class="label">Computational Biologist</p>
+        <h1 class="hero-name">Matthew Corney</h1>
+        <p class="hero-role">Data Scientist &middot; Bioinformatician &middot; Knowledge Graphs</p>
+        <p class="hero-bio">I develop machine learning methods for drug target identification and mode-of-action discovery, with experience building foundation models for immunology and applying knowledge graph reasoning across multi-omics data.</p>
+        <div class="links-row">
+            <a class="link-chip" href="https://github.com/MatthewCorney" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="link-chip" href="https://www.linkedin.com/in/matthew-corney/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="link-chip" href="matthew_corney@yahoo.co.uk">Email</a>
+            <a class="link-chip" href="https://huggingface.co/MatthewCorney" target="_blank" rel="noopener noreferrer">Hugging Face</a>
+            <span class="link-chip"><span class="dot"></span>&nbsp;Open to collaboration</span>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- Projects -->
+    <section id="projects" style="margin-bottom: 3rem;">
+        <p class="section-title">Selected projects</p>
+        <div class="project-grid">
+
+            <a class="project-card" href="https://github.com/MatthewCorney/xicor" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">xicor</p>
+                <p class="project-desc">Python implementation of the XICOR correlation algorithm.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Statistics</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/permuted_brunner_munzel" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">permuted_brunner_munzel</p>
+                <p class="project-desc">Permuted Brunner-Munzel statistical test.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Statistics</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/multi_class_fishers" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">multi_class_fishers</p>
+                <p class="project-desc">Fisher's exact test for non-2x2 contingency tables.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Statistics</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/linear_regression_testing" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">linear_regression_testing</p>
+                <p class="project-desc">Permutation testing of linear regression models.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Statistics</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/jonckheere_terpstra" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">jonckheere_terpstra</p>
+                <p class="project-desc">Jonckheere-Terpstra test for ordered group differences.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Statistics</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/outliers_test" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">outliers_test</p>
+                <p class="project-desc">Single outlier detection tests.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Statistics</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/dynamic_nodepiece" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">dynamic_nodepiece</p>
+                <p class="project-desc">NodePiece implementation for knowledge graph embeddings.</p>
+                <div class="tags">
+                    <span class="tag">Knowledge Graphs</span>
+                    <span class="tag">PyTorch</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/anyburl_python" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">anyburl_python</p>
+                <p class="project-desc">AnyBURL algorithm for learning logical rules in knowledge graphs.</p>
+                <div class="tags">
+                    <span class="tag">Knowledge Graphs</span>
+                    <span class="tag">Rule Learning</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/EasyOwl" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">EasyOwl</p>
+                <p class="project-desc">Simplified OWL ontology tooling.</p>
+                <div class="tags">
+                    <span class="tag">Knowledge Graphs</span>
+                    <span class="tag">OWL</span>
+                </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/MatthewCorney/Mariana" target="_blank" rel="noopener noreferrer">
+                <p class="project-name">Mariana (SonicAtlas)</p>
+                <p class="project-desc">Music recommendation website.</p>
+                <div class="tags">
+                    <span class="tag">Music</span>
+                    <span class="tag">Recommendation</span>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- Publications & Presentations -->
+    <section id="publications" style="margin-bottom: 3rem;">
+        <p class="section-title">Selected publications</p>
+        <div>
+            <div class="pub-item">
+                <p class="pub-title"><a href="https://arxiv.org/abs/2602.10168" target="_blank" rel="noopener noreferrer">EVA: Towards a universal model of the immune system</a></p>
+                <p class="pub-meta">Preprint &middot; arXiv &middot; February 2026</p>
+            </div>
+            <div class="pub-item">
+                <p class="pub-title"><a href="https://academic.oup.com/ecco-jcc/article/20/Supplement_1/jjaf231.499/8432525" target="_blank" rel="noopener noreferrer">P0318 Facing the valley of death in Inflammatory Bowel Disease: a machine learning approach to predict the clinical efficacy of drug candidates from preclinical data</a></p>
+                <p class="pub-meta">Conference abstract &middot; Journal of Crohn's and Colitis &middot; January 2026</p>
+            </div>
+            <div class="pub-item">
+                <p class="pub-title"><a href="https://www.biorxiv.org/content/10.1101/2025.05.02.651839v1" target="_blank" rel="noopener noreferrer">EVA: a Foundation Model Advancing Translational Drug Development in Immuno-Inflammation</a></p>
+                <p class="pub-meta">Preprint &middot; bioRxiv &middot; May 2025</p>
+            </div>
+            <div class="pub-item">
+                <p class="pub-title"><a href="https://link.springer.com/protocol/10.1007/978-1-0716-3449-3_10" target="_blank" rel="noopener noreferrer">Natural Language Processing for Drug Discovery Knowledge Graphs: Promises and Pitfalls</a></p>
+                <p class="pub-meta">Book chapter &middot; Methods in Molecular Biology, Humana &middot; September 2023</p>
+            </div>
+            <div class="pub-item">
+                <p class="pub-title"><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0291142" target="_blank" rel="noopener noreferrer">A large-scale evaluation of NLP-derived chemical-gene/protein relationships from the scientific literature: Implications for knowledge graph construction</a></p>
+                <p class="pub-meta">Journal article &middot; PLOS One &middot; September 2023</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- Contact -->
+    <section id="contact" style="margin-bottom: 2rem;">
+        <p class="section-title">Get in touch</p>
+        <p class="contact-text">Interested in computational drug discovery, knowledge graph methods, or collaborating on benchmarking work? Feel free to reach out.</p>
+        <p class="contact-email"><a href="mailto:matthew_corney@yahoo.co.uk">matthew_corney@yahoo.co.uk</a></p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span>&copy; 2026 Matthew Corney</span>
+        <div class="footer-links">
+            <a href="https://github.com/MatthewCorney" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/matthew-corney/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://huggingface.co/MatthewCorney" target="_blank" rel="noopener noreferrer">Hugging Face</a>
+            <a href="mailto:matthew_corney@yahoo.co.uk">Email</a>
+        </div>
+    </footer>
+
+</div>
+
 </body>
 </html>
